@@ -1,0 +1,100 @@
+{% extends "workouts/base.html" %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Редагувати тренування{% else %}Нове тренування{% endif %}</h1>
+
+<div style="
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 32px;
+  max-width: 520px;
+">
+  <form method="post">
+    {% csrf_token %}
+
+    <div style="margin-bottom: 8px;">
+      {{ form.as_p }}
+    </div>
+
+    <style>
+      /* Стилізація полів форми */
+      form p { margin-bottom: 16px; }
+      form label {
+        display: block;
+        font-size: 0.88rem;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      form input[type="text"],
+      form input[type="number"],
+      form textarea,
+      form select {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.97rem;
+        font-family: inherit;
+        background: #fafafa;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        outline: none;
+      }
+      form input:focus,
+      form textarea:focus,
+      form select:focus {
+        border-color: #e8a020;
+        box-shadow: 0 0 0 3px rgba(232, 160, 32, 0.15);
+        background: #fff;
+      }
+      form input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        accent-color: #e8a020;
+        cursor: pointer;
+      }
+      .errorlist {
+        color: #c0392b;
+        font-size: 0.85rem;
+        margin-top: 4px;
+        padding-left: 0;
+        list-style: none;
+      }
+    </style>
+
+    <div style="display: flex; gap: 12px; margin-top: 24px;">
+      <button type="submit" style="
+        background: #1a1a1a;
+        color: #f5f2ee;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 24px;
+        font-size: 0.97rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+      " onmouseover="this.style.background='#e8a020'" onmouseout="this.style.background='#1a1a1a'">
+        💾 Зберегти
+      </button>
+
+      <a href="{% url 'workout_list' %}" style="
+        display: inline-block;
+        background: transparent;
+        color: #666;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 0.97rem;
+        text-decoration: none;
+        transition: border-color 0.2s, color 0.2s;
+      " onmouseover="this.style.borderColor='#999';this.style.color='#1a1a1a'"
+         onmouseout="this.style.borderColor='#ccc';this.style.color='#666'">
+        Скасувати
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

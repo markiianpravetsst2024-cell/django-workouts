@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout Tracker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f5f2ee;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1a1a1a;
+      padding: 18px 32px;
+      border-bottom: 3px solid #e8a020;
+    }
+
+    header a {
+      color: #f5f2ee;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    header a:hover { color: #e8a020; }
+
+    main {
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 28px;
+      color: #1a1a1a;
+      border-left: 4px solid #e8a020;
+      padding-left: 14px;
+    }
+
+    a { color: #c47a10; }
+    a:hover { color: #1a1a1a; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="{% url 'workout_list' %}">🏋️ Workout Tracker</a>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

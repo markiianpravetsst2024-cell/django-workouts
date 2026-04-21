@@ -1,0 +1,119 @@
+{% extends "workouts/base.html" %}
+
+{% block content %}
+<h1 style="color: #1a1a1a; margin-bottom: 24px;">🏋️ Мої тренування</h1>
+
+{% if workouts %}
+  <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; padding: 0;">
+    {% for workout in workouts %}
+    <li style="
+      background: #fff;
+      border: 1px solid #ddd;
+      border-left: 4px solid {% if workout.is_done %}#aaa{% else %}#e8a020{% endif %};
+      border-radius: 6px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    ">
+      <div>
+        <a href="{% url 'workout_detail' workout.pk %}" style="
+          font-size: 1.1rem;
+          font-weight: bold;
+          text-decoration: {% if workout.is_done %}line-through{% else %}none{% endif %};
+          color: {% if workout.is_done %}#999{% else %}#c47a10{% endif %};
+        ">{{ workout.title }}</a>
+        <p style="font-size: 0.88rem; color: #666; margin-top: 4px;">
+          ⏱ {{ workout.duration_min }} хв
+          {% if workout.is_done %}
+            &nbsp;·&nbsp;<span style="color: #4caf50; font-weight: bold;">✓ Виконано</span>
+          {% endif %}
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 8px; flex-shrink: 0; align-items: center;">
+        {% if not workout.is_done %}
+        <form method="post" action="{% url 'workout_done' workout.pk %}">
+          {% csrf_token %}
+          <button type="submit" style="
+            background: #e8a020;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: background 0.2s;
+          " onmouseover="this.style.background='#c47a10'" onmouseout="this.style.background='#e8a020'">
+            Виконано
+          </button>
+        </form>
+        {% endif %}
+
+        <a href="{% url 'workout_edit' workout.pk %}" style="
+          background: #f8f9fa;
+          color: #1a1a1a;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          padding: 5px 13px;
+          cursor: pointer;
+          font-size: 0.85rem;
+          text-decoration: none;
+          font-weight: 500;
+          transition: all 0.2s;
+        " onmouseover="this.style.background='#e9ecef';this.style.borderColor='#bbb'"
+           onmouseout="this.style.background='#f8f9fa';this.style.borderColor='#ddd'">
+          Редагувати
+        </a>
+
+        <form method="post" action="{% url 'workout_delete' workout.pk %}">
+          {% csrf_token %}
+          <button type="submit" style="
+            background: transparent;
+            color: #c0392b;
+            border: 1px solid #c0392b;
+            border-radius: 4px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s, color 0.2s;
+          " onmouseover="this.style.background='#c0392b';this.style.color='#fff'"
+             onmouseout="this.style.background='transparent';this.style.color='#c0392b'"
+             onclick="return confirm('Видалити тренування?')">
+            Видалити
+          </button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p style="
+    background: #fff;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    padding: 32px;
+    text-align: center;
+    color: #888;
+    font-size: 1.05rem;
+    margin-bottom: 32px;
+  ">😴 Тренувань ще не додано</p>
+{% endif %}
+
+<a href="{% url 'workout_create' %}" style="
+  display: inline-block;
+  background: #1a1a1a;
+  color: #f5f2ee;
+  text-decoration: none;
+  padding: 10px 22px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+" onmouseover="this.style.background='#e8a020'" onmouseout="this.style.background='#1a1a1a'">
+  + Додати тренування
+</a>
+{% endblock %}
